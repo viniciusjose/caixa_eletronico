@@ -41,3 +41,8 @@
 .input-icon{
     border-left: 0px;
 }
+
+.invalid-user{
+    color: red;
+    font-size: 18px;
+}

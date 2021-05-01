@@ -1,3 +1,9 @@
+<?php 
+    session_start();
+    require 'config.php';
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
@@ -29,20 +35,41 @@
                 <form method="POST"> 
                     <div class="mb-3 input-group">
                         <span class="input-group-addon icon-login"><i class="fas fa-envelope"></i></span>
-                        <input type="email" class="form-control input-icon" id="exampleInputEmail1" placeholder = "Digite seu e-mail" aria-describedby="emailHelp">
+                        <input type="email" name= "email" required class="form-control input-icon" id="exampleInputEmail1" placeholder = "Digite seu e-mail" aria-describedby="emailHelp">
                         <div id="emailHelp" class="form-text">Nós jamais iremos compartilhar seus dados com outras pessoas.</div>
                     </div>
                     <div class="mb-3 input-group">
                         
                         <span class="input-group-addon icon-senha"><i class="fas fa-lock"></i></span>
-                        <input type="password" class="form-control input-icon" id="exampleInputPassword1" placeholder = "Digite sua senha">
+                        <input type="password" name= "senha" required class="form-control input-icon" id="exampleInputPassword1" placeholder = "Digite sua senha">
                     </div>
+                    <?php
+                        $usuario = "";
+                        if((isset($_POST['email']) && !empty($_POST['email'])) && (isset($_POST['senha']) && !empty($_POST['senha']))){
+                            $email = addslashes($_POST['email']);
+                            $senha = md5(addslashes($_POST['senha']));
+                    
+                            $sql = "SELECT email, senha, id_usuario FROM usuarios WHERE email = :email AND senha = :senha";
+                            $sql = $database->prepare($sql);
+                            $sql->bindValue(":email", $email);
+                            $sql->bindValue(":senha", $senha);
+                            $sql->execute();
+                            if($sql->rowCount() > 0){
+                                $usuario = $sql->fetch();
+                                header("Location: index.php");
+                                exit;
+                            }else{
+                                echo "<p class = 'invalid-user'>Usuário e senha inválidos</p>";
+                            }
+                        }
+                    ?>
                     <div class="mb-3 form-check">
-                        <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                        <input type="checkbox" name= "manter_login"class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Manter-me conectado </label>
                     </div>
                     <p>Não é registado ? <a href="cadastrar.php">Crie uma conta</a></p>
                     <button type="submit" class="btn btn-primary btn-login">Login</button>
+                    
                 </form>
             </div>
         </div>
