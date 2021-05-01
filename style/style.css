@@ -1,0 +1,26 @@
+.box-form {
+    margin-top: 7rem;
+    width: 500px;
+    height: 570px;
+    border: 1px solid #cccccc;
+    border-top: 20px solid red;
+}
+.form-login{
+    width: 450px;
+    height: 400px;;
+}
+.btn-login {
+    color: white;
+    background-color: red;
+    padding: 10px 60px 10px 60px;
+    margin-top: 1rem;
+    margin-left: 8rem;
+    border-radius: 25px;
+    border-color: red;
+}
+.btn-login:hover {
+    color: red;
+    background-color: white;
+    transition-delay: .0.5s;
+    border-color: red;
+}
