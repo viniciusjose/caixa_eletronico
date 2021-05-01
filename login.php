@@ -26,15 +26,16 @@
                 </div>     
             </div>
             <div class="container form-login">
-                <form method="POST">
-                    <div class="mb-3">
-                        <label for="exampleInputEmail1" class="form-label">Endereço de e-mail</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" placeholder = "Digite seu e-mail" aria-describedby="emailHelp">
+                <form method="POST"> 
+                    <div class="mb-3 input-group">
+                        <span class="input-group-addon icon-login"><i class="fas fa-envelope"></i></span>
+                        <input type="email" class="form-control input-icon" id="exampleInputEmail1" placeholder = "Digite seu e-mail" aria-describedby="emailHelp">
                         <div id="emailHelp" class="form-text">Nós jamais iremos compartilhar seus dados com outras pessoas.</div>
                     </div>
-                    <div class="mb-3">
-                        <label for="exampleInputPassword1" class="form-label">Senha</label>
-                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder = "Digite sua senha">
+                    <div class="mb-3 input-group">
+                        
+                        <span class="input-group-addon icon-senha"><i class="fas fa-lock"></i></span>
+                        <input type="password" class="form-control input-icon" id="exampleInputPassword1" placeholder = "Digite sua senha">
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">

@@ -24,3 +24,20 @@
     transition-delay: .0.5s;
     border-color: red;
 }
+.icon-login{
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+}
+.icon-senha{
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+
+}
+.input-icon{
+    border-left: 0px;
+}
