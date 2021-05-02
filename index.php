@@ -1,3 +1,25 @@
+<?php 
+
+  session_start();
+  require 'config.php';
+  if(!isset($_SESSION['id_usuario']) && empty($_SESSION['id_usuario'])){
+    header("Location: login.php");
+    exit;
+  }
+
+  $sql = "SELECT id_usuario FROM usuarios WHERE id_usuario = :id";
+  $sql = $database->prepare($sql);
+  $sql->bindValue(":id", $_SESSION['id_usuario']);
+  $sql->execute();
+  if($sql->rowCount() > 0){
+    
+  }else{
+    header("Location login.php");
+    exit;
+  }
+
+?>
+
 <!doctype html>
 <html lang="en">
   <head>
