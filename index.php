@@ -35,7 +35,7 @@
     <title>Santander - Página Inicial</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-dark fixed-top navbar-customize">
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark navbar-customize">
       <a class="navbar-brand" href="#">
         <img src="img/logo-santander.png" width="200" class="d-inline-block align-top" alt="">
       </a>
@@ -53,8 +53,40 @@
         </li>
       </ul>
         
-    </nav>    
+    </nav>
+      <p>Agencia: <?php echo $conta['agencia'];?> | Conta: <?php echo $conta['conta'];?>  | Saldo: R$ <?php echo $conta['saldo'].",00"?></p>
+    <hr/>
+    <h3>Movimentação/Extrato</h3>
+    <a href="add-transacao.php">Adicionar Transação</a><br><br>
 
+    <table border="1" width="400">
+		<tr>
+			<th>Data</th>
+			<th>Valor</th>
+		</tr>
+		<?php
+		$sql = $database->prepare("SELECT * FROM historico WHERE id_conta = :id_conta");
+		$sql->bindValue(":id_conta", $_SESSION['conta']);
+		$sql->execute();
+
+      if($sql->rowCount() > 0) {
+        foreach($sql->fetchAll() as $item) {
+          ?>
+          <tr>
+            <td><?php echo date('d/m/Y H:i', strtotime($item['data_operacao'])); ?></td>
+            <td>
+              <?php if($item['tipo'] == '0'): ?>
+              <font color="green">R$ <?php echo $item['valor'] ?></font>
+              <?php else: ?>
+              <font color="red">- R$ <?php echo $item['valor'] ?></font>
+              <?php endif; ?>
+            </td>
+          </tr>
+          <?php
+        }
+      }
+      ?>
+	  </table>
     <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>

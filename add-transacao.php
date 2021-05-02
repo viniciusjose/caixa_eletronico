@@ -1,0 +1,77 @@
+<?php 
+    session_start();
+    require 'config.php';
+    if(isset($_POST['tipo'])){
+        $tipo = $_POST['tipo'];
+        $valor = str_replace(",", ".", $_POST['valor']);
+	    $valor = floatval($valor);
+        $sql = $database->prepare("INSERT INTO historico (id_conta, tipo, valor, data_operacao) VALUES (:id_conta, :tipo, :valor, NOW())");
+	    $sql->bindValue(":id_conta", $_SESSION['conta']);
+	    $sql->bindValue(":tipo", $tipo);
+	    $sql->bindValue(":valor", $valor);
+	    $sql->execute();
+
+        if($tipo == '0'){
+            //deposito
+            $sql = $database->prepare("UPDATE contas SET saldo = saldo + :valor WHERE id= :id");
+            $sql->bindValue(":valor", $valor);
+            $sql->bindValue(":id", $_SESSION['conta']);
+            $sql->execute();
+        }else{
+            //saque
+            $sql = $database->prepare("UPDATE contas SET saldo = saldo - :valor WHERE id= :id");
+            $sql->bindValue(":valor", $valor);
+            $sql->bindValue(":id", $_SESSION['conta']);
+            $sql->execute();
+        }
+
+        header("Location: index.php");
+        exit;
+    }
+?>
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link rel="stylesheet" href="style/style.css">
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/bf7e05c402.js" crossorigin="anonymous"></script>
+    <title>Santander - Adicionar Transação</title>
+    <link rel="shortcut icon" href="img/fav-icon.jpg" />
+  </head>
+  <body>
+        <div class="container box-form">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <figure class="figure">
+                            <img src="img/logo-santander.png" class="figure-img img-fluid rounded logo-principal" alt="...">
+                        </figure>
+                    </div>
+                </div>     
+            </div>
+            <form method="POST"> 
+                <select name="tipo">
+                    <option value="0">Depósito</option>
+                    <option value="1">Saque</option>
+                </select><br><br>
+                <div class="mb-3 input-group">
+                    
+                    <span class="input-group-addon icon-login"><i class="fas fa-money-bill-wave"></i></span>
+                    <input type="text" name= "valor" pattern="[0-9.,]{1,}" required class="form-control input-icon" id="exampleInputPassword1" placeholder = "Digite o valor em reais">
+                </div>
+                <button type="submit" class="btn btn-primary btn-login">Cadastrar</button>
+                
+            </form>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+    </body>
+</html>
