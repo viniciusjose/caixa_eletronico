@@ -2,17 +2,17 @@
 
   session_start();
   require 'config.php';
-  if(!isset($_SESSION['id_usuario']) && empty($_SESSION['id_usuario'])){
+  if(!isset($_SESSION['conta']) && empty($_SESSION['conta'])){
     header("Location: login.php");
     exit;
   }
-  $usuario = "";
-  $sql = "SELECT * FROM usuarios WHERE id_usuario = :id";
+  $conta = "";
+  $sql = "SELECT * FROM contas WHERE id= :id";
   $sql = $database->prepare($sql);
-  $sql->bindValue(":id", $_SESSION['id_usuario']);
+  $sql->bindValue(":id", $_SESSION['conta']);
   $sql->execute();
   if($sql->rowCount() > 0){
-    $usuario = $sql->fetch();
+    $conta = $sql->fetch();
   }else{
     header("Location login.php");
     exit;
@@ -44,7 +44,7 @@
       <ul class="navbar-nav user-dropdown">
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-user icon-usuario"></i><?php echo $usuario['nome']?>
+            <i class="fas fa-user icon-usuario"></i><?php echo $conta['titular']?>
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
             <a class="dropdown-item" href="alterar.php">Alterar informações</a>

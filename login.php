@@ -33,35 +33,43 @@
             <div class="container form-login">
                 <form method="POST"> 
                     <div class="mb-3 input-group">
-                        <span class="input-group-addon icon-login"><i class="fas fa-envelope"></i></span>
-                        <input type="email" name= "email" required class="form-control input-icon" id="exampleInputEmail1" placeholder = "Digite seu e-mail" aria-describedby="emailHelp">
+                        <span class="input-group-addon icon-login"><i class="fas fa-university"></i></span>
+                        <input type="text" name= "agencia" required class="form-control input-icon" id="exampleInputEmail1" placeholder = "Digite sua agência" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3 input-group">
+                        <span class="input-group-addon icon-login"><i class="far fa-address-card"></i></span>
+                        <input type="text" name= "conta" required class="form-control input-icon" id="exampleInputEmail1" placeholder = "Digite sua conta" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3 input-group">
                         
-                        <span class="input-group-addon icon-senha"><i class="fas fa-lock"></i></span>
+                        <span class="input-group-addon icon-login"><i class="fas fa-lock"></i></span>
                         <input type="password" name= "senha" required class="form-control input-icon" id="exampleInputPassword1" placeholder = "Digite sua senha">
                         <div id="emailHelp" class="form-text">Todos os seus dados estarão armazenados em segurança conosco.</div>
                     </div>
                     <?php
-                        $usuario = "";
-                        if((isset($_POST['email']) && !empty($_POST['email'])) && (isset($_POST['senha']) && !empty($_POST['senha']))){
-                            $email = addslashes($_POST['email']);
+                        $conta = "";
+                        if((isset($_POST['agencia']) && !empty($_POST['agencia'])) && (isset($_POST['conta']) && !empty($_POST['conta'])) 
+                        && (isset($_POST['senha']) && !empty($_POST['senha']))){
+
+                            $agencia = addslashes($_POST['agencia']);
+                            $conta = addslashes($_POST['conta']);
                             $senha = md5(addslashes($_POST['senha']));
-                    
-                            $sql = "SELECT email, senha, id_usuario FROM usuarios WHERE email = :email AND senha = :senha";
+
+                            $sql = "SELECT id FROM contas WHERE agencia= :agencia AND conta= :conta AND senha= :senha";
                             $sql = $database->prepare($sql);
-                            $sql->bindValue(":email", $email);
+                            $sql->bindValue(":agencia", $agencia);
+                            $sql->bindValue(":conta", $conta);
                             $sql->bindValue(":senha", $senha);
                             $sql->execute();
+
                             if($sql->rowCount() > 0){
-                                $usuario = $sql->fetch();
+                                $conta = $sql->fetch();
                                 if(isset($_POST['manter_login']) && !empty($_POST['manter_login'])){
-                                    $_SESSION['id_usuario'] = $usuario['id_usuario'];
+                                    $_SESSION['conta'] = $conta['id'];
                                 }
                                 header("Location: index.php");
                                 exit;
                             }else{
-                                
                                 echo "<p class = 'invalid-user'>Usuário e senha inválidos</p>";
                             }
                         }

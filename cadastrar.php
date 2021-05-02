@@ -1,20 +1,21 @@
-<?php
-    require "config.php";
-?>
 <?php 
     session_start();
     require 'config.php';
 
-    if((isset($_POST['nome']) && !empty($_POST['nome'])) && (isset($_POST['email']) && !empty($_POST['email']))
-     && (isset($_POST['senha']) && !empty($_POST['senha'])) && (isset($_POST['agree_policy']) && !empty($_POST['agree_policy']))){
+    if((isset($_POST['nome']) && !empty($_POST['nome'])) && (isset($_POST['agencia']) && !empty($_POST['agencia']))
+     && (isset($_POST['conta']) && !empty($_POST['conta'])) && (isset($_POST['agree_policy']) && !empty($_POST['agree_policy']))
+     && (isset($_POST['senha']) && !empty($_POST['senha']))){
         $nome = addslashes($_POST['nome']);
-        $email = addslashes($_POST['email']);
+        $agencia = addslashes($_POST['agencia']);
+        $conta = addslashes($_POST['conta']);
         $senha = md5(addslashes($_POST['senha']));
 
-        $sql = "INSERT INTO usuarios (nome, email, senha) VALUES (:nome, :email, :senha)";
+
+        $sql = "INSERT INTO contas (titular, agencia, conta, senha) VALUES (:titular, :agencia, :conta, :senha)";
         $sql = $database->prepare($sql);
-        $sql->bindValue(":nome", $nome);
-        $sql->bindValue(":email", $email);
+        $sql->bindValue(":titular", $nome);
+        $sql->bindValue(":agencia", $agencia);
+        $sql->bindValue(":conta", $conta);
         $sql->bindValue(":senha", $senha);
         $sql->execute();
         header("Location: login.php");
@@ -48,31 +49,31 @@
                     </div>
                 </div>     
             </div>
-            <div class="container form-login">
-                <form method="POST"> 
+            <form method="POST"> 
                     <div class="mb-3 input-group">
                         <span class="input-group-addon icon-login"><i class="fas fa-user"></i></span>
                         <input type="text" name= "nome" required class="form-control input-icon" id="exampleInputEmail1" placeholder = "Digite seu nome" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3 input-group">
-                        
-                        <span class="input-group-addon icon-login"><i class="fas fa-envelope"></i></span>
-                        <input type="email" name= "email" required class="form-control input-icon" id="exampleInputEmail1" placeholder = "Digite seu e-mail" aria-describedby="emailHelp">
-                        
+                        <span class="input-group-addon icon-login"><i class="fas fa-university"></i></span>
+                        <input type="text" name= "agencia" required class="form-control input-icon" id="exampleInputEmail1" placeholder = "Digite sua agência" aria-describedby="emailHelp">
                     </div>
                     <div class="mb-3 input-group">
-                        <span class="input-group-addon icon-senha"><i class="fas fa-lock"></i></span>
-                        <input type="password" name= "senha" required class="form-control input-icon" id="exampleInputPassword1" placeholder = "Digite sua senha">
+                        <span class="input-group-addon icon-login"><i class="far fa-address-card"></i></span>
+                        <input type="text" name= "conta" required class="form-control input-icon" id="exampleInputEmail1" placeholder = "Digite sua conta" aria-describedby="emailHelp">
+                    </div>
+                    <div class="mb-3 input-group">
                         
+                        <span class="input-group-addon icon-login"><i class="fas fa-lock"></i></span>
+                        <input type="password" name= "senha" required class="form-control input-icon" id="exampleInputPassword1" placeholder = "Digite sua senha">
                     </div>
                     <div class="mb-3 form-check">
-                        <input type="checkbox" name= "agree_policy" requiredclass="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Eu concordo com a Política de Privacidade.</label>
+                        <input type="checkbox" name= "agree_policy" class="form-check-input" id="exampleCheck1">
+                        <label class="form-check-label" for="exampleCheck1">Concordo em enviar meus dados. </label>
                     </div>
                     <button type="submit" class="btn btn-primary btn-login">Cadastrar</button>
                     
                 </form>
-            </div>
         </div>
         
                 

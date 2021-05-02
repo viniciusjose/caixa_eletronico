@@ -2,7 +2,7 @@
 .box-form {
     margin-top: 7rem;
     width: 500px;
-    height: 600px;
+    height: 650px;
     border: 1px solid #cccccc;
     border-top: 20px solid red;
 }
@@ -26,13 +26,6 @@
     border-color: red;
 }
 .icon-login{
-    padding: 10px;
-    border-top: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-
-}
-.icon-senha{
     padding: 10px;
     border-top: 1px solid #ccc;
     border-left: 1px solid #ccc;
