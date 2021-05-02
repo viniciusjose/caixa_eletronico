@@ -55,3 +55,15 @@
     border-color: #ccc;
 }
 /*Fim das alterações da Tela de Login*/
+
+/*Inicio da costumização da pagina inicial*/
+.navbar-customize{
+    background-color: #e5e5e5!important;
+}
+.user-dropdown{
+    display: block;
+    margin-right: 3rem;
+}
+.icon-usuario{
+    margin-right: 1rem;
+}
