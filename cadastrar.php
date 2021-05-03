@@ -9,14 +9,16 @@
         $agencia = addslashes($_POST['agencia']);
         $conta = addslashes($_POST['conta']);
         $senha = md5(addslashes($_POST['senha']));
+        $saldo = 0;
 
 
-        $sql = "INSERT INTO contas (titular, agencia, conta, senha) VALUES (:titular, :agencia, :conta, :senha)";
+        $sql = "INSERT INTO contas (titular, agencia, conta, senha, saldo) VALUES (:titular, :agencia, :conta, :senha, :valor)";
         $sql = $database->prepare($sql);
         $sql->bindValue(":titular", $nome);
         $sql->bindValue(":agencia", $agencia);
         $sql->bindValue(":conta", $conta);
         $sql->bindValue(":senha", $senha);
+        $sql->bindValue(":valor", $saldo);
         $sql->execute();
         header("Location: login.php");
     }

@@ -74,10 +74,6 @@
                         <span class="input-group-addon icon-login"><i class="fas fa-lock"></i></span>
                         <input type="password" name= "senha" required class="form-control input-icon" id="exampleInputPassword1" placeholder = "Digite sua nova senha">
                     </div>
-                    <div class="mb-3 form-check">
-                        <input type="checkbox" name= "agree_policy" class="form-check-input" id="exampleCheck1">
-                        <label class="form-check-label" for="exampleCheck1">Concordo em enviar meus dados. </label>
-                    </div>
                     <button type="submit" class="btn btn-primary btn-login">Cadastrar</button>
                     
                 </form>
